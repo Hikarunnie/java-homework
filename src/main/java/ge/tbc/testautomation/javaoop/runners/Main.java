@@ -1,37 +1,24 @@
 package ge.tbc.testautomation.javaoop.runners;
-import ge.tbc.testautomation.javaoop.figures.Circle;
-import ge.tbc.testautomation.javaoop.util.Util;
-import java.util.Random;  // imma do it with importing Random, and imma keep randomized version as final
-
+import ge.tbc.testautomation.javaoop.figures.Rectangle;
+import ge.tbc.testautomation.javaoop.figures.Triangle;
+import ge.tbc.testautomation.javaoop.util.HelperFunctions;
 public class Main {
     public static void main(String[] args){
-        Random rand = new Random();
+        // instantiated two rectangles to compare later and one triangle
+        Rectangle rect1 = new Rectangle(Math.random() * 10, Math.random()*44); //with random values
+        Rectangle rect2 = new Rectangle(Math.random()*44,Math.random()*10);
+        Triangle trian = new Triangle(Math.random()*10,Math.random()*10,Math.random()*10);
 
-        Circle c1 = new Circle(rand.nextDouble() * 44);
-        System.out.println("num of instances: " + Circle.numberOfCircleInstances);
-        Circle c2 = new Circle(rand.nextDouble() * 44);
-        System.out.println("num of instances: " + Circle.numberOfCircleInstances);
-        Circle c3 = new Circle(rand.nextDouble() * 44);
-        System.out.println("num of instances: " + Circle.numberOfCircleInstances);
-        Circle c4 = new Circle(rand.nextDouble() * 44);
-        System.out.println("num of instances: " + Circle.numberOfCircleInstances);
-        Circle c5 = new Circle(rand.nextDouble() * 44);
-        System.out.println("num of instances: " + Circle.numberOfCircleInstances);
+        //I use all the function for each
+        System.out.println("rectangle 1 area: " + rect1.getArea());
+        System.out.println("rectangle 1 perimeter: " + rect1.getPerimeter());
 
-        String c1ToString= Util.circleToString(c1);
-        System.out.println(c1ToString);
+        System.out.println("rectangle 2 area: " + rect2.getArea());
+        System.out.println("rectangle 2 perimeter: " + rect2.getPerimeter());
 
-        String c2ToString= Util.circleToString(c2);
-        System.out.println(c2ToString);
+        System.out.println("triangle area: " + trian.getArea());
+        System.out.println("triangle perimeter: " + trian.getPerimeter());
 
-        String c3ToString= Util.circleToString(c3);
-        System.out.println(c3ToString);
-
-        String c4ToString= Util.circleToString(c4);
-        System.out.println(c4ToString);
-
-        String c5ToString= Util.circleToString(c5);
-        System.out.println(c5ToString);
-
+        HelperFunctions.compareRectangles(rect1,rect2);
     }
 }
