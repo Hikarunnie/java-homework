@@ -2,6 +2,9 @@ package ge.tbc.testautomation.javaoop.runners;
 import ge.tbc.testautomation.exceptionsStringOperationsRegex.RadiusException;
 import ge.tbc.testautomation.javaoop.figures.Circle;
 import ge.tbc.testautomation.javaoop.figures.Triangle;
+
+import java.text.CharacterIterator;
+
 public class Main {
     public static void main(String[] args) {
         //// for invalid
@@ -22,7 +25,7 @@ public class Main {
             c1.customSize(4);
             System.out.println("size after custom sizing:" + c1.getLength());
 
-        }catch(Exception e){
+        }catch(Exception e) {
             System.out.println(e.getMessage());
         }
         //// trying stuff for triangle
@@ -42,6 +45,13 @@ public class Main {
             System.out.println("size after doubling:" + tri1.getLength());
             tri1.customSize(4);
             System.out.println("size after custom sizing:" + tri1.getLength());
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+        try{
+            Circle c2 = new Circle(4);
+            c2.customSize(0);
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
