@@ -1,65 +1,49 @@
 package ge.tbc.testautomation.javaoop.runners;
-import ge.tbc.testautomation.exceptionsStringOperationsRegex.LimitException;
 import ge.tbc.testautomation.exceptionsStringOperationsRegex.RadiusException;
 import ge.tbc.testautomation.javaoop.figures.Circle;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import ge.tbc.testautomation.javaoop.figures.Triangle;
 public class Main {
-    public static void main(String[] args){
-        // negative val
+    public static void main(String[] args) {
+        //// for invalid
         try {
-            Circle c1 = new Circle(-4.4);
+            Circle invalidCircle = new Circle(-4.4);
         }catch(RadiusException re){
             System.out.println(re.getMessage());
         }
-        // testing limit
         try{
-            for(int i=1; i<8; i++){
-                System.out.println("creating circle " + i);
-                Circle circle = new Circle(Math.random()*44);
-            }
-        }catch(LimitException le){
-            System.out.println(le.getMessage());
+           //// using methods for valid circle
+            Circle c1 = new Circle(4);
+            System.out.println("area:" + c1.getArea());
+            System.out.println("length: " + c1.getLength());
+            c1.printPackageName();
+
+            c1.doubleSize();
+            System.out.println("size after doubling:" + c1.getLength());
+            c1.customSize(4);
+            System.out.println("size after custom sizing:" + c1.getLength());
+
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        //// trying stuff for triangle
+        try {
+            Triangle invalidTriangle = new Triangle(-4.4, 4, 0);
+        }catch(RadiusException re){
+            System.out.println(re.getMessage());
         }
 
-       // string ops
-        String stri = "Test Automation Bootcamp 12, 2025";
+        try{
+            Triangle tri1 = new Triangle(4,4,4);
+            System.out.println("tri1 area:" + tri1.getArea());
+            System.out.println("tri1 length: " + tri1.getLength());
+            tri1.printPackageName();
 
-        //indexes put by hand
-        String autom1 = stri.substring(5,15).toLowerCase();
-
-        //second version using indexof()
-        int endIndex = stri.indexOf("Automation") + "Automation".length();
-        String withIndexOf = stri.substring(stri.indexOf("Automation"),endIndex ).toLowerCase();
-
-        System.out.println(autom1);
-        System.out.println(withIndexOf);
-
-        String[] words = stri.split(" ");
-        for(String w : words) {
-            System.out.println(w);
+            tri1.doubleSize();
+            System.out.println("size after doubling:" + tri1.getLength());
+            tri1.customSize(4);
+            System.out.println("size after custom sizing:" + tri1.getLength());
+        }catch (Exception e){
+            System.out.println(e.getMessage());
         }
-
-        System.out.println("length: " + stri.length());
-
-        String replaced = stri.replaceAll(" ", "-");
-        System.out.println(replaced);
-
-        //regex
-        String[] numbers = {"555-74-24-75","444-44-44-44","598-003-987","555-26-08-44","5744-44-48-44","599-987-654"};
-        for(String number : numbers){
-            System.out.println(phoneNumberValidation(number));
-        }
-
     }
-    private static boolean phoneNumberValidation(String phoneNumber){
-        String finalNum = phoneNumber.replaceAll("-","");
-
-        Pattern pattern = Pattern.compile("(555|595|592|599)\\d{6}");
-        Matcher matcher = pattern.matcher(finalNum);
-
-        return matcher.matches();
-    }
-
 }
