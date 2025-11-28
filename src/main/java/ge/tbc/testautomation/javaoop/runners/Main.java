@@ -45,5 +45,15 @@ public class Main {
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
+
+
+
+
+        try{
+            Triangle tri2 = new Triangle(4,4,4);
+            tri2.customSize(0);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 }
