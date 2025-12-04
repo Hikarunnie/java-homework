@@ -1,59 +1,51 @@
 package ge.tbc.testautomation.javaoop.runners;
-import ge.tbc.testautomation.exceptionsStringOperationsRegex.RadiusException;
-import ge.tbc.testautomation.javaoop.figures.Circle;
-import ge.tbc.testautomation.javaoop.figures.Triangle;
-
-import java.text.CharacterIterator;
+import ge.tbc.testautomation.annotationsAndStreams.Analyzable;
+import ge.tbc.testautomation.annotationsAndStreams.VariableNameAnnotation;
+import java.util.Arrays;
+import java.util.List;
+import java.lang.reflect.Field;
 
 public class Main {
     public static void main(String[] args) {
-        //// for invalid
-        try {
-            Circle invalidCircle = new Circle(-4.4);
-        }catch(RadiusException re){
-            System.out.println(re.getMessage());
-        }
-        try{
-           //// using methods for valid circle
-            Circle c1 = new Circle(4);
-            System.out.println("area:" + c1.getArea());
-            System.out.println("length: " + c1.getLength());
-            c1.printPackageName();
+        Field[] fields = Analyzable.class.getDeclaredFields();
 
-            c1.doubleSize();
-            System.out.println("size after doubling:" + c1.getLength());
-            c1.customSize(4);
-            System.out.println("size after custom sizing:" + c1.getLength());
+        ////matching names
+        List<Field> matchName = Arrays.stream(fields).filter(field ->{
+            if(field.isAnnotationPresent(VariableNameAnnotation.class)){
+                VariableNameAnnotation anotName = field.getAnnotation(VariableNameAnnotation.class);
+                return anotName.name().toLowerCase().equals(field.getName()); //without lowerCase none satisfies(Ispokemon != ispokemon)
+              //return anotName.name().equalsIgnoreCase(field.getName()); //this does the rtick as well
+            }
+            return false;
+        }).toList();
 
-        }catch(Exception e) {
-            System.out.println(e.getMessage());
-        }
-        //// trying stuff for triangle
-        try {
-            Triangle invalidTriangle = new Triangle(-4.4, 4, 0);
-        }catch(RadiusException re){
-            System.out.println(re.getMessage());
+        for(Field fil : matchName){
+            System.out.println(fil);
         }
 
-        try{
-            Triangle tri1 = new Triangle(4,4,4);
-            System.out.println("tri1 area:" + tri1.getArea());
-            System.out.println("tri1 length: " + tri1.getLength());
-            tri1.printPackageName();
+        ////ones that don't match
+        List<Field> misMatchName = Arrays.stream(fields).filter(field -> {
+            if(field.isAnnotationPresent(VariableNameAnnotation.class)){
+                VariableNameAnnotation anotName = field.getAnnotation(VariableNameAnnotation.class);
+                return !anotName.name().toLowerCase().equals(field.getName());
+            }
+            return false;
+        }).toList();
 
-            tri1.doubleSize();
-            System.out.println("size after doubling:" + tri1.getLength());
-            tri1.customSize(4);
-            System.out.println("size after custom sizing:" + tri1.getLength());
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+        System.out.println("doesn't match: " + misMatchName); //pokemon and num2
 
-        try{
-            Circle c2 = new Circle(4);
-            c2.customSize(0);
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+       /////directly put SuppressWarnings above each variable not above main coz assignment didn't specify(?)
+       @SuppressWarnings("unused")
+       String nam ="Hikaru";
+
+       @SuppressWarnings("unused")
+       int num = 44;
+
+       @SuppressWarnings("unused")
+       Boolean isNice = true;
+
+       @SuppressWarnings("unused")
+       String pok ="Umbreon & Sylveon";
+
     }
 }
