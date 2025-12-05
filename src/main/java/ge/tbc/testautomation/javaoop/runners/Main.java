@@ -1,51 +1,28 @@
 package ge.tbc.testautomation.javaoop.runners;
-import ge.tbc.testautomation.annotationsAndStreams.Analyzable;
-import ge.tbc.testautomation.annotationsAndStreams.VariableNameAnnotation;
-import java.util.Arrays;
-import java.util.List;
+import ge.tbc.testautomation.generics.AnyPair;
+import ge.tbc.testautomation.generics.FigurePair;
+import ge.tbc.testautomation.javaoop.figures.Circle;
+import ge.tbc.testautomation.javaoop.figures.Rectangle;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        Field[] fields = Analyzable.class.getDeclaredFields();
+        AnyPair<Field[],Field[]> ann =  getDeclaredFields(44,"Hikaru");
 
-        ////matching names
-        List<Field> matchName = Arrays.stream(fields).filter(field ->{
-            if(field.isAnnotationPresent(VariableNameAnnotation.class)){
-                VariableNameAnnotation anotName = field.getAnnotation(VariableNameAnnotation.class);
-                return anotName.name().toLowerCase().equals(field.getName()); //without lowerCase none satisfies(Ispokemon != ispokemon)
-              //return anotName.name().equalsIgnoreCase(field.getName()); //this does the rtick as well
-            }
-            return false;
-        }).toList();
+        System.out.println(Arrays.asList(ann.getElementOne()));
+        System.out.println(Arrays.asList(ann.getElementTwo()));
 
-        for(Field fil : matchName){
-            System.out.println(fil);
-        }
+        ////
+        Circle c1 = new Circle(4.4);
+        Rectangle r1 = new Rectangle(4,4);
 
-        ////ones that don't match
-        List<Field> misMatchName = Arrays.stream(fields).filter(field -> {
-            if(field.isAnnotationPresent(VariableNameAnnotation.class)){
-                VariableNameAnnotation anotName = field.getAnnotation(VariableNameAnnotation.class);
-                return !anotName.name().toLowerCase().equals(field.getName());
-            }
-            return false;
-        }).toList();
-
-        System.out.println("doesn't match: " + misMatchName); //pokemon and num2
-
-       /////directly put SuppressWarnings above each variable not above main coz assignment didn't specify(?)
-       @SuppressWarnings("unused")
-       String nam ="Hikaru";
-
-       @SuppressWarnings("unused")
-       int num = 44;
-
-       @SuppressWarnings("unused")
-       Boolean isNice = true;
-
-       @SuppressWarnings("unused")
-       String pok ="Umbreon & Sylveon";
-
+        FigurePair<Circle,Rectangle> figPair = new FigurePair<>(c1,r1);
+        System.out.println(figPair);
+    }
+    private static <K, D> AnyPair<Field[],Field[]> getDeclaredFields(K objOne, D objTwo){
+        Field[] kFields = objOne.getClass().getDeclaredFields();
+        Field[] dFields = objTwo.getClass().getDeclaredFields()     ;
+        return new AnyPair<>(kFields,dFields);
     }
 }
